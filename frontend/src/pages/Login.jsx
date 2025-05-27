@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppContext } from '../context/context';
+import { useAppContext } from '../context/Context.jsx';
 
 const LoginPage = () => {
     const { setIsLoggedIn, server, setUser } = useAppContext();
