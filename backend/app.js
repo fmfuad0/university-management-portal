@@ -16,8 +16,18 @@ import {courseOfferRouter} from "./routes/courseOfferRoutes.js";
 dotenv.config();
 const app = express();
 
+const allowedOrigins = [
+    'https://stu-management-portal.netlify.app'
+];
+
 app.use(cors({
-    origin: "https://stu-management-portal.netlify.app/",
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS not allowed from this origin: ' + origin));
+        }
+    },
     credentials: true,
 }));
 app.use(express.json());

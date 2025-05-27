@@ -16,6 +16,7 @@ const LoginPage = () => {
             headers: {
                 "Content-Type": "application/json",
             },
+            credentials :"include",
             body: JSON.stringify({studentId, password})
         })
         if(res.status === 200){
