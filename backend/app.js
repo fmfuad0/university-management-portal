@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 
 import authRouter from "./routes/authRoutes.js";
@@ -12,14 +11,13 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
 import sectionRouter from "./routes/sectionRoutes.js";
 import billRouter from "./routes/billRoutes.js";
-import {createBill, getAllBills} from "./controllers/billController.js";
 import {courseOfferRouter} from "./routes/courseOfferRoutes.js";
 
 dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://stu-management-portal.netlify.app/",
     credentials: true,
 }));
 app.use(express.json());
