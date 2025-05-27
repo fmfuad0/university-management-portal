@@ -49,7 +49,6 @@ const AppContent = () => {
             }
         })
         const student = await data.json();
-        console.log(student);
         setIsLoggedIn(true);
         setUser(student);
     }
@@ -64,7 +63,7 @@ const AppContent = () => {
                 <div className="sm:absolute lg:relative max-w-[25%] mx-auto">
                     <Sidebar />
                 </div>
-                <main className="lg:p-4 sm:pt-10  flex flex-col h-[85vh] overflow-scroll w-full border-t border-gray-400 rounded-lg">
+                <main className="lg:p-4 sm:pt-20  flex flex-col h-[85vh] overflow-scroll w-full border-t border-gray-400 rounded-lg">
                     {isLoggedIn ? (
                         <Routes>
                             <Route path="/" element={<Home/>} />

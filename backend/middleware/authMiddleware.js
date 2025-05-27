@@ -5,7 +5,6 @@ export const verifyJWT = async (req, res, next) => {
     let token = req.cookies?.token || req.headers.authorization?.replace("Bearer ", "");
         try {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            console.log(decoded)
             const student = await Student.findOne({studentId:decoded._id}).select("-password");
             // console.log(student);
             req.user = student;

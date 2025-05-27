@@ -22,7 +22,6 @@ const resultHistory = () => {
                 body: JSON.stringify({searchValue}),
             });
             const data = await res.json();
-            console.log(data)
             data.sort((a, b) => {return a.year < b.year});
             setResults(data);
         }

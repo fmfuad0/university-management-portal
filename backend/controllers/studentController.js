@@ -4,7 +4,6 @@ import Student from "../models/Student.js";
 export const getStudents = async (req, res) => {
     try {
         const students = await Student.find()
-        // console.log(students)
         res.status(201).json({students});
     } catch (err) {
         res.status(500).json({ message: err.message });

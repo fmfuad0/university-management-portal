@@ -5,7 +5,8 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const server = "https://university-management-portal.onrender.com";
+  // const server = "https://university-management-portal.onrender.com";
+  const server = "http://localhost:3000";
   const year="2024"
   const semester = "Fall"
   const maxCredit = 18

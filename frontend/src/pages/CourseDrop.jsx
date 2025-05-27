@@ -18,7 +18,6 @@ const CourseDrop = () => {
             body: JSON.stringify({year, semester})
         })
         const courses = await data.json();
-        console.log(courses);
         setCourses(courses);
     }
     useEffect(() => {

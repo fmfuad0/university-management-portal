@@ -9,22 +9,22 @@ const RegistrationConfirmation = () => {
     const [sections, setSections] = useState([])
     const [isRegistrationConfirmed, setIsRegistrationConfirmed] = useState(false)
     const [creditTaken, setCreditTaken] = useState(0)
-
-    const section ={
-            "name": "243D1",
-            "courseTitle": "Differential and Integral Calculus",
-            "courseCode": "MAT 101",
-            "classTime": {
-                "Monday": {
-                    "start": "08:30",
-                    "end": "10:00"
-                },
-                "Tuesday": {
-                    "start": "08:30",
-                    "end": "10:00"
-                }
-            }
-        }
+    //
+    // const section ={
+    //         "name": "243D1",
+    //         "courseTitle": "Differential and Integral Calculus",
+    //         "courseCode": "MAT 101",
+    //         "classTime": {
+    //             "Monday": {
+    //                 "start": "08:30",
+    //                 "end": "10:00"
+    //             },
+    //             "Tuesday": {
+    //                 "start": "08:30",
+    //                 "end": "10:00"
+    //             }
+    //         }
+    //     }
     useEffect(() => {
         const getSections = async () => {
             const res = await fetch(`${server}/course/get-registered-courses/${user.studentId}/${year}/${semester}`, {
@@ -42,7 +42,6 @@ const RegistrationConfirmation = () => {
             }
             setCreditTaken(tmp)
             setSections(data)
-            console.log(data)
         }
         getSections()
     }, []);
@@ -76,12 +75,10 @@ const RegistrationConfirmation = () => {
                         <div className={`p-5 shadow-2xl bg-slate-50 w-full`}>
                             <div className={`flex gap-5 items-center justify-center py-3`}>
                                 <h1 className={`text-2xl text-center font-semibold`}>Selected Courses</h1>
-                                <button className={`flex flex-row items-center gap-2 px-4 py-2 rounded-lg  transition ${dueAmount<=500||isRegistrationConfirmed? "text-white fond-semibold bg-green-600 hover:bg-green-700" : "bg-red-500 text-black"} cursor-pointer `} onClick={()=>{
-                                        console.log("clicked")}} disabled={dueAmount>500 || isRegistrationConfirmed}>{(dueAmount<500||isRegistrationConfirmed)&&<img src={'/assets/icons8-tick.gif'} className={`h-6 rounded-full`} />}{isRegistrationConfirmed?"Registration Confirmed":dueAmount<=500?"Confirm Registration" : "Registration Disabled"}</button>
+                                <button className={`flex flex-row items-center gap-2 px-4 py-2 rounded-lg  transition ${dueAmount<=500||isRegistrationConfirmed? "text-white fond-semibold bg-green-600 hover:bg-green-700" : "bg-red-500 text-black"} cursor-pointer `} disabled={dueAmount>500 || isRegistrationConfirmed}>{(dueAmount<500||isRegistrationConfirmed)&&<img src={'/assets/icons8-tick.gif'} className={`h-6 rounded-full`} />}{isRegistrationConfirmed?"Registration Confirmed":dueAmount<=500?"Confirm Registration" : "Registration Disabled"}</button>
                             </div>
                             <div className="hover:shadow-2xl duration-400 grid grid-cols-2 gap-10 text-sm p-3 border border-gray-300 list-none ">
                                 {sections.map((section, index) => {
-                                    console.log(section)
                                     return (
                                     <div key={index} className={`bg-green-300 font-bold shadow-xl rounded-2xl p-6 border border-gray-200 hover:shadow-2xl transition-all duration-300 w-full max-w-3xl`}>
                                         {/* Header: Section Name and Course Code */}

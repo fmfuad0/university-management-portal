@@ -34,18 +34,23 @@ const Sidebar = () => {
     return (
         <>
             {/* Mobile Top Bar with Menu Button */}
-            <div className="lg:hidden  flex items-center justify-between p-4 bg-green-300 text-white rounded-full shadow-[#363535FF] shadow-lg">
+            <div className="lg:hidden opacity-60 hover:opacity-90  flex items-center justify-between p-4 bg-green-300 text-white rounded-full shadow-[#363535FF] shadow-lg">
                 <button onClick={() => setIsMobileOpen(!isMobileOpen)}>
-                    <img src={"./assets/icons8-menu-30.png"} alt="Menu" className="w-6 h-6" />
+                    <img src={"./assets/icons8-menu-30.png"} alt="Menu" className="w-6 h-6 cursor-pointer" />
                 </button>
             </div>
 
             {/* Sidebar */}
             <aside
-                className={`fixed pt-10 lg:top-0 sm:top-[50%] left-0 h-auto bg-green-800 text-white w-64 z-50 transform transition-transform duration-300 ease-in-out rounded 
-                ${isMobileOpen ? 'translate-x-0 -translate-y-[50%]' : '-translate-x-full'} lg:translate-x-0 lg:static lg:h-auto overflow-y-auto`}
+                className={`fixed top-0 left-0 lg:static 
+  w-64 z-50 bg-green-800 text-white 
+  transform transition-transform duration-300 ease-in-out 
+  ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'} 
+  lg:translate-x-0 
+  h-screen lg:h-auto 
+  overflow-y-auto`}
             >
-                <div className="p-4 py-2">
+                <div className="p-4 py-2 pt-10 lg:pt-4">
                     <nav className="flex flex-col">
                         {links.map(({ path, label }) => (
                             <Link
@@ -60,6 +65,7 @@ const Sidebar = () => {
                     </nav>
                 </div>
             </aside>
+
 
             {/* Mobile Overlay */}
             {isMobileOpen && (

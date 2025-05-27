@@ -1,19 +1,28 @@
-
 import React from "react";
 
 const Home = () => {
-  return (<>
+    return (
+        <div
+            className="relative flex flex-col items-center justify-start font-bold text-slate-900 overflow-hidden h-[60vh] lg:h-[80vh]"
+            style={{
+                fontFamily: "Montserrat",
+                backgroundImage: "url('./assets/GUB-cover.jpg')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+            }}
+        >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black opacity-60 z-10" />
 
-    <div style={{fontFamily: "Montserrat",backgroundImage: `url('./assets/GUB-cover.jpg')`} }
-         className={`lg:tracking-widest sm:tracking-wide lg:text-3xl sm:text-xl pt-3 text-slate-900 lg:h-[80vh] lg:bg-[cover] sm:bg-[contain] sm:h-[60vh] justify-start font-bold items-center flex flex-col overflow-hidden`}>
-        <div className={`w-full h-full bg-black scale-110 opacity-60`}></div>
-        <div className={`absolute mt-20 z-39 text-slate-300 flex flex-col items-center justify-start`}>
-            <img src={`./assets/gumsbanner.png`} className={`w-[15%] mx-auto`} alt={``}/>
-            <h1 className={`max-w-full`}>WELCOME TO GREEN UNIVERSITY STUDENT PORTAL</h1>
+            {/* Content */}
+            <div className="absolute top-20 z-20 text-slate-300 flex flex-col items-center">
+                <img src="/assets/gumsbanner.png" className="w-[15%] mx-auto" alt="GUMS Banner" />
+                <h1 className="lg:text-3xl sm:text-xl tracking-wide text-center px-4 mt-4">
+                    WELCOME TO GREEN UNIVERSITY STUDENT PORTAL
+                </h1>
+            </div>
         </div>
-    </div></>
-  );
+    );
 };
 
 export default Home;
-

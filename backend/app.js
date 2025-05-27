@@ -17,7 +17,8 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-    'https://stu-management-portal.netlify.app'
+    'https://stu-management-portal.netlify.app',
+    'http://localhost:5173'
 ];
 
 app.use(cors({

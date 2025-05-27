@@ -10,7 +10,6 @@ export const createBill = async (req, res) => {
 
         const data = req.body;
         for(const bill of data){
-            console.log(bill);
             await Bill.create(bill);
         }
         res.status(201).json(await Bill.find())
@@ -36,10 +35,7 @@ export const getBillById = async (req, res) => {
 
 export const getAllBills = async (req, res) => {
     const { searchValue } = req.body;
-    console.log(searchValue);
-    console.log(req.user.studentId);
     if (searchValue?.length === 0) {
-        console.log("Zero");
         const bills = await Bill.find({studentId: req.user.studentId});
         return res.status(200).json(bills);
     }

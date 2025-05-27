@@ -12,17 +12,13 @@ export const createResult = async (req, res) => {
                     obj[key] = value;
                 }else results = value
             }
-            // console.log(obj);
             for(const [key, value] of Object.entries(results)) {
                 for(const [key2, value2] of Object.entries(value)){
                     obj[key2] = value2;
                 }
-                console.log(obj)
-                console.log(count++)
                 await Result.create(obj);
             }
         }
-        // console.log(count);
         res.status(201).json(await Result.find());
 
         // const result = await Result.create(req.body);
@@ -37,20 +33,15 @@ export const createResult = async (req, res) => {
 export const getResults = async (req, res) => {
     try {
         const { searchValue } = req.body;
-        console.log(searchValue);
         if(searchValue.length === 0) {
-            // console.log("Zero")
             const studentId = String(req.user.studentId); // Ensure type match with DB
-            console.log("Fetching all results for:", studentId);
             const data = await Result.find({studentId})
-            // console.log(data)
             res.status(201).json(data)
             return;
         }
         if (!searchValue || typeof searchValue !== 'string') {
             return res.status(400).json({ message: "Invalid search value" });
         }
-        // console.log(req.user)
         const numberSearch = parseFloat(searchValue);
         const isNumeric = !isNaN(numberSearch);
         const searchQuery = {

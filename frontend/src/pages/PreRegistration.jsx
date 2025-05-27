@@ -23,7 +23,6 @@ const PreRegistration = () => {
                 body: JSON.stringify({year:"2024", semester:"Fall"}),
             });
             const data = await res.json();
-            console.log("results :" ,data.data)
             let filteredData = []
             data.data.map((item) => {if(item)filteredData.push(item);if(item.registeredStudents.includes(user.studentId)){temp+=item.courseCredit}});
             setCreditTaken(temp)
@@ -34,12 +33,11 @@ const PreRegistration = () => {
         getResults();
     }, [searchValue, server]);
   return (
-      <div className="" >{results.length}
+      <div className="" >
           <div className="flex flex-col gap-2">
               <h1 className={`text-3xl font-semibold`}>Pre Registration</h1><hr className={`opacity-35`}/>
               <div id={"table"} >
                   <Search searchValue={searchValue} setSearchValue={setSearchValue} />
-                  =>{creditTaken}
                   <div className={`w-full grid grid-cols-2 gap-5 p-10 items-center `}>
                       {results.map((section, sl) => <SectionCard key={sl} creditTaken={creditTaken} setCreditTaken={setCreditTaken} section={section}/>)}
                   </div>

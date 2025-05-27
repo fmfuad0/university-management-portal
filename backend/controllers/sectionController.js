@@ -21,7 +21,6 @@ export const createSection = async function(req, res) {
     const data = req.body;
     for(const section of data) {
         await Section.create(section);
-        console.log(c++);
     }
     res.status(200).json(await Section.find());
 }
@@ -33,7 +32,6 @@ export const toggleSectionRegister = async function(req, res) {
         return res.status(400).json({message: "Student not found"});
     }
     const section = await Section.findById(sectionId)
-    console.log(section)
     if (!section) {
         return res.status(400).json({message: "Section not found"});
     }
@@ -47,7 +45,6 @@ export const toggleSectionRegister = async function(req, res) {
             return res.status(404).json("Student not registered");
         }
         case "rq":{
-            console.log(section.waitList)
             const ver =section.waitList.includes(studentId)
             let response;
             if(ver) response = await Section.findByIdAndUpdate(sectionId,{$pull:{waitList: studentId}}, {new:true});
@@ -59,7 +56,6 @@ export const toggleSectionRegister = async function(req, res) {
                 const response = await Section.findByIdAndUpdate(sectionId,{$push:{registeredStudents: studentId}}, {new:true});
                 await Student.findByIdAndUpdate(student._id, {$push:{coursesEnrolled:section.courseCode}})
 
-                console.log(response)
                 return res.status(200).json(response)
             }
             return res.status(404).json("Student already registered");
@@ -109,14 +105,12 @@ export const getSections = async function(req, res) {
 export const getEnrolledSections = async function(req, res) {
     const {year, semester} = req.body
     const sections = await Section.find({year, semester, registeredStudents: {$in:[req.user.studentId]}})
-    console.log(sections)
     res.status(200).json(sections);
 }
 
 export const getSectionsForPreRegistration = async function(req, res) {
     const {studentId} = req.params;
     const {year, semester} = req.body;
-    console.log(studentId, year, semester);
     if(!studentId) {
         res.status(404).json({message: "StudentId not found"});
     }
@@ -126,22 +120,17 @@ export const getSectionsForPreRegistration = async function(req, res) {
     }
     ///offeredCourseCodes
     const courseCodes = (await CourseOffer.find({year, semester, batch:student.batch}))[0].courses
-    console.log(courseCodes)
     const allowedCourses = await Promise.all(courseCodes.map(async courseCode => {
         const course = await Course.findOne({courseCode});
         if(!course) {
             res.status(404).json({message: "Course not found"});
         }
-        console.log(course.prerequisites)
         if(course.prerequisites==='None') return courseCode;
         else if(student.coursesCompleted.includes(course.prerequisites)) return courseCode
-        console.log("Not allowed : " , courseCode)
-        console.log("preRequisite : " , course.prerequisites)
         return ""
     }))
     // console.log(student.batch)
     // console.log(courseCodes)
-    console.log("Allowed : ", allowedCourses)
     const sections = await Section.find({semester, year, courseCode: {$in:allowedCourses}, batch:student.batch})
     //
     // console.log("Sections : ", sections.length)

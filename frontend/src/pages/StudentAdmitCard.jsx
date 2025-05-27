@@ -27,8 +27,8 @@ const StudentAdmitCard = () => {
                 </select>
                 <div className="flex bg-green-200 flex-col h-[500px] border p-5 rounded gap-5 w-full items-start">
                     <div className={`flex gap-5`}>
-                        <button className={`bg-blue-600 text-white cursor-pointer hover:bg-blue-500 duration-300 px-3 py-1 rounded `}>Download Routine</button>
-                        <button className={`bg-blue-600 text-white cursor-pointer hover:bg-blue-500 duration-300 px-3 py-1 rounded `}>Print Routine</button>
+                        <button className={`bg-blue-600 text-white cursor-pointer hover:bg-blue-500 duration-300 py-1 w-30 rounded `}>Download</button>
+                        <button className={`bg-blue-600 text-white cursor-pointer hover:bg-blue-500 duration-300 py-1 w-30 rounded `}>Print</button>
                     </div>
                     <h1 className={`text-4xl text-center  w-full`}>Admit card will be shown here</h1>
                 </div>

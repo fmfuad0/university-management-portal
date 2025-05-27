@@ -20,18 +20,14 @@ const ClassRoutine = () => {
                 body: JSON.stringify({year, semester})
             })
             const data = await res.json()
-            console.log(data)
             let filteredData = []
             for(const section of data){
                 let tmp = section
                 let day = ""
                 let time = ""
-                console.log(section)
                 for(const [key, val] of Object.entries(section["classTime"])){
-                    console.log(key, val)
                     day=day+(day===""? "":", ")+key;time=val.start+"-"+val.end
                 }
-                console.log(day, time)
                 tmp.day = day
                 tmp.time = time
                 filteredData.push(tmp)

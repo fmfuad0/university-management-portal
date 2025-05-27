@@ -65,14 +65,12 @@ export const getEnrolledCourses = async (req, res) => {
     const {year, semester} = req.body
     const courseCodes = (await Student.findOne({studentId:req.user.studentId}).select("coursesEnrolled -_id")).coursesEnrolled
     const courses = await Course.find({courseCode: {$in:courseCodes}})
-    console.log(courses)
     res.status(200).json(courses);
 }
 
 export const getSelectedCourses = async (req, res) => {
     try {
         const { studentId, semester, year } = req.params;
-        console.log(semester, year, studentId);
         const sections = await Section.find({semester, year, registeredStudents: { $in: [studentId] }}).select("name courseTitle courseCode classTime courseCredit -_id")
         res.status(200).json(sections);
     } catch (error) {

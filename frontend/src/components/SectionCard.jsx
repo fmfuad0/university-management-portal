@@ -25,9 +25,7 @@ function SectionCard({section, setCreditTaken, creditTaken, sl}) {
                 "Authorization" : `Bearer ${localStorage.getItem("token")}`
             }
         }));
-        console.log(response)
         const userCurrentState = await response.json();
-        console.log("userCurrentState", userCurrentState)
         if(userCurrentState.coursesEnrolled.includes(section.courseCode) && operation==='add'){toast.error("Course already taken");return}
         if((!userCurrentState.coursesEnrolled.includes(section.courseCode)) && operation==='rm'){toast.error("Course not registered");return}
         const res = await fetch(`${server}/section/toggle-register/${user.studentId}/${section._id}/${operation}`,{
@@ -49,10 +47,8 @@ function SectionCard({section, setCreditTaken, creditTaken, sl}) {
                 setCreditTaken(creditTaken+section.courseCredit)
             }
         }else if(res.ok){
-            console.log("Requested")
             setIsRequested(!isRequested);
         }
-        console.log(await res.json())
     }
 
     useEffect(()=>{

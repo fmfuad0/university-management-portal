@@ -27,7 +27,6 @@ const BillHistory = () => {
                 body: JSON.stringify({searchValue})
             })
             const data = await res.json();
-            console.log(data)
             data.sort((a, b) => a.date<b.date)
             setBills(data);
         }
