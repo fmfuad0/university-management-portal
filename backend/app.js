@@ -2,37 +2,52 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
+import authRouter from "./routes/authRoutes.js";
+import studentRouter from "./routes/studentRoutes.js";
+import courseRouter from "./routes/courseRoutes.js";
+import resultRouter from "./routes/resultRoutes.js";
+import announcementRouter from "./routes/announcementRoutes.js";
+import paymentRouter from "./routes/paymentRoutes.js";
+import dotenv from "dotenv";
 import authRoutes from "./routes/authRoutes.js";
-import studentRoutes from "./routes/studentRoutes.js";
-import courseRoutes from "./routes/courseRoutes.js";
-import departmentRoutes from "./routes/departmentRoutes.js";
-import facultyRoutes from "./routes/facultyRoutes.js";
-import scheduleRoutes from "./routes/scheduleRoutes.js";
-import examRoutes from "./routes/examRoutes.js";
-import resultRoutes from "./routes/resultRoutes.js";
-import announcementRoutes from "./routes/announcementRoutes.js";
-import paymentRoutes from "./routes/paymentRoutes.js";
-import calendarRoutes from "./routes/calendarRoutes.js";
+import sectionRouter from "./routes/sectionRoutes.js";
+import billRouter from "./routes/billRoutes.js";
+import {createBill, getAllBills} from "./controllers/billController.js";
+import {courseOfferRouter} from "./routes/courseOfferRoutes.js";
 
+dotenv.config();
 const app = express();
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
+
+app.use('/auth', authRoutes);
+// [Use all other routes here]
+
+app.get('/', (req, res) => {
+    res.send('University Management System API');
+});
+
 app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/faculties", facultyRoutes);
-app.use("/api/schedules", scheduleRoutes);
-app.use("/api/exams", examRoutes);
-app.use("/api/results", resultRoutes);
-app.use("/api/announcements", announcementRoutes);
-app.use("/api/payments", paymentRoutes);
-app.use("/api/calendars", calendarRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/students", studentRoutes);
-app.use("/api/courses", courseRoutes);
-app.use("/api/departments", departmentRoutes);
 
-// Connect to MongoDB and start server
-const PORT = process.env.PORT || 5000;
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
-    .catch((err) => console.error(err));
+app.use('/bill', billRouter);
+app.use("/student", studentRouter);
+app.use("/result", resultRouter);
+app.use("/announcement", announcementRouter);
+app.use("/payment", paymentRouter);
+app.use("/auth", authRouter);
+app.use("/course", courseRouter);
+app.use("/section", sectionRouter)
+app.use("/course-offer", courseOfferRouter)
+
+
+
+export default app;

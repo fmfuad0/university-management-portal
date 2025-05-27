@@ -1,4 +1,4 @@
-import Enrollment from '../models/enrollmentModel.js';
+import Enrollment from '../models/Enrollment.js';
 
 export const enrollStudent = async (req, res) => {
     try {

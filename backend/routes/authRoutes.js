@@ -1,16 +1,14 @@
 import express from "express";
 import {
-    registerUser,
-    loginUser,
-    getUserProfile,
+    loginStudent,
+    registerStudent,
 } from "../controllers/authController.js";
 
-import { protect } from "../middleware/authMiddleware.js";
+import { verifyJWT } from "../middleware/authMiddleware.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/register", registerUser);
-authRouter.post("/login", loginUser);
-authRouter.get("/profile", protect, getUserProfile);
+authRouter.post("/register", registerStudent);
+authRouter.post("/login", loginStudent);
 
 export default authRouter;

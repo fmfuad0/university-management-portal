@@ -1,87 +1,44 @@
-import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Student from "../models/Student.js";
 
 // Generate JWT Token
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+const generateToken = (_id) => {
+    return jwt.sign({ _id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
     });
 };
 
-// @desc    Register new user
-// @route   POST /api/auth/register
-// @access  Public
-export const registerUser = async (req, res) => {
-    const { name, email, password, role } = req.body;
+export const registerStudent = async (req, res) => {
+    try {
+        const data = req.body;
+        for(const student of data) {
+            const {studentId,fullName,email,password,presentAddress,permanentAddress,phoneNumber, dateOfBirth,fatherName,motherName,guardianContact,maritalStatus,nationality,religion,program,batch,activeStatus,department,enrollmentYear, gender, semester} = student;
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(password, salt);
+            await Student.create({studentId,fullName,email,password:hash,presentAddress,permanentAddress,phoneNumber, dateOfBirth,fatherName,motherName,guardianContact,maritalStatus,nationality,religion,program,batch,activeStatus,department,enrollmentYear, gender, semester});
 
-    if (!name || !email || !password) {
-        return res.status(400).json({ message: "Please add all fields" });
-    }
-
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-        return res.status(400).json({ message: "User already exists" });
-    }
-
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create user
-    const user = await User.create({
-        name,
-        email,
-        password: hashedPassword,
-        role: role || "student", // default to student role
-    });
-
-    if (user) {
-        res.status(201).json({
-            _id: user._id,
-            name: user.name,
-            email: user.email,
-            role: user.role,
-            token: generateToken(user._id),
-        });
-    } else {
-        res.status(400).json({ message: "Invalid user data" });
+        }
+        const dd = await Student.find()
+        res.status(201).json({dd});
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
 };
 
-// @desc    Authenticate user & get token (login)
-// @route   POST /api/auth/login
-// @access  Public
-export const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+export const loginStudent = async (req, res) => {
+    const { studentId, password } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user) {
+    const student = await Student.findOne({studentId});
+    if (!student) {
         return res.status(400).json({ message: "Invalid credentials" });
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, student.password);
     if (!isMatch) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(400).json({ message: "Invalid credentials2" });
     }
-
-    res.json({
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        token: generateToken(user._id),
-    });
+    student.password=""
+    const token = generateToken(student.studentId)
+    res.status(200).cookie("token", token).json({student, token});
 };
 
-// @desc    Get user profile
-// @route   GET /api/auth/profile
-// @access  Private
-export const getUserProfile = async (req, res) => {
-    const user = await User.findById(req.user._id).select("-password");
-    if (user) {
-        res.json(user);
-    } else {
-        res.status(404).json({ message: "User not found" });
-    }
-};
