@@ -1,37 +1,76 @@
-import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
-    const [selected, setSelected] = useState("");
+    const location = useLocation();
+    const [selected, setSelected] = useState('');
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
 
     useEffect(() => {
-        setSelected(window.location.pathname.replace("/",'') || "Home");
-    }, [window.location.pathname]);
+        const path = location.pathname.replace('/', '') || 'Home';
+        setSelected(path);
+        setIsMobileOpen(false); // Close sidebar when navigating
+    }, [location]);
 
+    const links = [
+        { path: '', label: 'Home' },
+        { path: 'profile', label: 'Profile' },
+        { path: 'result-history', label: 'Result History' },
+        { path: 'bill-history', label: 'Bill History' },
+        { path: 'course-evaluation', label: 'Course Evaluation' },
+        { path: 'pre-registration', label: 'Pre-registration' },
+        { path: 'registration-confirmation', label: 'Registration Confirmation' },
+        { path: 'class-routine', label: 'Class Routine' },
+        { path: 'password-change', label: 'Password Change' },
+        { path: 'course-drop', label: 'Course Drop' },
+        { path: 'semester-drop', label: 'Semester Drop' },
+        { path: 'program-change', label: 'Student Program Change' },
+        { path: 'admit-card', label: 'Student Admit Card' },
+        { path: 'special-exam-apply', label: 'Student Special Exam Apply' },
+        { path: 'exam-routine', label: 'Student Exam Routine' },
+        { path: 'teams-credentials', label: 'Teams Credentials' },
+    ];
 
     return (
-        <aside className="bg-green-800 rounded-sm my-auto text-white w-64 p-4">
-            <nav className="flex flex-col gap-1 px-2 ">
-                <Link to="/" className={`${selected==="Home"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("Home")}}>Home</Link>
-                <Link to="/profile" className={`${selected==="profile"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("profile")}}>Profile</Link>
-                <Link to="/result-history" className={`${selected==="result-history"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("result-history")}}>Result History</Link>
-                <Link to="/bill-history" className={`${selected==="bill-history"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("bill-history")}}>Bill History</Link>
-                <Link to="/course-evaluation" className={`${selected==="course-evaluation"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("course-evaluation")}}>Course Evaluation</Link>
-                <Link to="/pre-registration" className={`${selected==="pre-registration"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("pre-registration")}}>Pre-registration</Link>
-                <Link to="/registration-confirmation" className={`${selected==="registration-confirmation"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("registration-confirmation")}}>Registration Confirmation</Link>
-                <Link to="/class-routine" className={`${selected==="class-routine"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("class-routine")}}>Class Routine</Link>
-                <Link to="/password-change" className={`${selected==="password-change"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("password-change")}}>Password Change</Link>
-                <Link to="/course-drop" className={`${selected==="course-drop"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("course-drop")}}>Course Drop</Link>
-                <Link to="/semester-drop" className={`${selected==="semester-drop"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("semester-drop")}}>Semester Drop</Link>
-                <Link to="/program-change" className={`${selected==="program-change"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("program-change")}}>Student Program Change</Link>
-                <Link to="/admit-card" className={`${selected==="admit-card"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("admit-card")}}>Student Admit Card</Link>
-                <Link to="/special-exam-apply" className={`${selected==="special-exam-apply"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("special-exam-apply")}}>Student Special Exam
-                    Apply</Link>
-                <Link to="/exam-routine" className={`${selected==="exam-routine"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("exam-routine")}}>Student Exam Routine</Link>
-                <Link to="/teams-credentials" className={`${selected==="teams-credentials"? "bg-green-700" : "hover:bg-green-700"}   p-1 px-2 rounded`} onClick={()=>{setSelected("teams-credentials")}}>Teams Credentials</Link>
-            </nav>
-        </aside>
-    )
+        <>
+            {/* Mobile Top Bar with Menu Button */}
+            <div className="lg:hidden  flex items-center justify-between p-4 bg-green-800 text-white">
+                <button onClick={() => setIsMobileOpen(!isMobileOpen)}>
+                    <img src={"./assets/icons8-menu-30.png"} alt="Menu" className="w-6 h-6" />
+                </button>
+                <h1 className="text-lg font-semibold">Dashboard</h1>
+            </div>
+
+            {/* Sidebar */}
+            <aside
+                className={`fixed pt-10 lg:top-0 sm:top-[50%] left-0 h-auto bg-green-800 text-white w-64 z-50 transform transition-transform duration-300 ease-in-out rounded 
+                ${isMobileOpen ? 'translate-x-0 -translate-y-[50%]' : '-translate-x-full'} lg:translate-x-0 lg:static lg:h-auto overflow-y-auto`}
+            >
+                <div className="p-4 py-2">
+                    <nav className="flex flex-col">
+                        {links.map(({ path, label }) => (
+                            <Link
+                                key={path}
+                                to={`/${path}`}
+                                className={`p-2 py-1 rounded ${selected === path ? 'bg-green-700' : 'hover:bg-green-700'}`}
+                                onClick={() => setSelected(path)}
+                            >
+                                {label}
+                            </Link>
+                        ))}
+                    </nav>
+                </div>
+            </aside>
+
+            {/* Mobile Overlay */}
+            {isMobileOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-40 z-40 lg:hidden"
+                    onClick={() => setIsMobileOpen(false)}
+                />
+            )}
+        </>
+    );
 };
 
 export default Sidebar;
