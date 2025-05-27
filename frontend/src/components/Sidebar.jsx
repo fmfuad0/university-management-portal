@@ -34,11 +34,10 @@ const Sidebar = () => {
     return (
         <>
             {/* Mobile Top Bar with Menu Button */}
-            <div className="lg:hidden  flex items-center justify-between p-4 bg-green-800 text-white">
+            <div className="lg:hidden  flex items-center justify-between p-4 bg-green-300 text-white rounded-full shadow-[#363535FF] shadow-lg">
                 <button onClick={() => setIsMobileOpen(!isMobileOpen)}>
                     <img src={"./assets/icons8-menu-30.png"} alt="Menu" className="w-6 h-6" />
                 </button>
-                <h1 className="text-lg font-semibold">Dashboard</h1>
             </div>
 
             {/* Sidebar */}
