@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import {AppProvider, useAppContext} from './context/context.jsx';
+import {AppProvider, useAppContext} from './context/Context.jsx';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Login from './pages/Login.jsx';
