@@ -94,7 +94,7 @@ const RegistrationConfirmation = () => {
                                             </div>
                                         </div>
 
-                                        <div className="mb-5 flex items-center gap-5">
+                                        <div className="mb-5 flex lg:flex-row sm:flex-col  items-center gap-5">
                                             {/*<p className="text-sm font-semibold text-gray-800 mb-1">Class Time:</p>*/}
                                             <ul className="text-sm font-mono bg-gray-200 rounded-lg p-3 border border-dashed border-gray-300">
                                                 {Object.entries(section.classTime).map(([day, time]) => (
