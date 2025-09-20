@@ -8,6 +8,18 @@ const LoginPage = () => {
     const [studentId, setStudentId] = useState("");
     const [password, setPassword] = useState("");
 
+    useEffect(()=>{
+        const res = await fetch(`${server}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials :"include",
+            body: JSON.stringify({"STU005", "pass"})
+        })
+        navigate("/");
+    })
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Implement authentication logic here
@@ -43,7 +55,8 @@ const LoginPage = () => {
                     placeholder="Username"
                     value={studentId}
                     onChange={(e)=>setStudentId(e.target.value)}
-                    className="w-full p-2 mb-4 border rounded"
+                    className="w-full p-2 mb-4 border rounded" 
+                    disabled
                     required
                 />
                 <input
@@ -52,10 +65,11 @@ const LoginPage = () => {
                     placeholder="Password"
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}
-                    className="w-full p-2 mb-6 border rounded"
+                    className="w-full p-2 mb-6 border rounded" 
+                    disabled
                     required
                 />
-                <button type="submit" className="w-full bg-green-700 text-white p-2 rounded hover:bg-green-800">
+                <button type="submit" className="w-full bg-green-700 text-white p-2 rounded hover:bg-green-800" disabled>
                     Login
                 </button>
             </form>
