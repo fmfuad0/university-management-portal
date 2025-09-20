@@ -17,7 +17,7 @@ const LoginPage = () => {
                 "Content-Type": "application/json",
             },
             credentials :"include",
-            body: JSON.stringify({"STU001", "pass"})
+            body: JSON.stringify({"STU005", "pass"})
         })
         if(res.status === 200){
             window.alert("Login successfull");
