@@ -9,12 +9,29 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
 
     useEffect(()=>{
-        setStudentId("STU005");
-        setPassword("pass");
-        async funtion dd(){
-            await handleSubmit();
+        async function dd(){
+        const res = await fetch(`${server}/auth/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials :"include",
+            body: JSON.stringify({username:"STU005", password:"pass"})
+        });
+        if(res.status === 200){
+            window.alert("Login successfull");
+            const data = await res.json();
+            setIsLoggedIn(true);
+            setUser(data.student)
+            localStorage.setItem("token", data.token)
+            navigate('/');
+        }else{
+            setIsLoggedIn(false);
+            setUser(null);
+            window.alert("Login failed");
         }
-        dd();
+    };
+        dd()
     })
 
     const handleSubmit = async (e) => {
