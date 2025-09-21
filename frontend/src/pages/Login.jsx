@@ -30,6 +30,7 @@ const LoginPage = () => {
             setUser(null);
             window.alert("Login failed");
         }
+            console.log("executed");
     };
         dd()
     })
