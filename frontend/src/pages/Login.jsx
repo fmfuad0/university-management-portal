@@ -84,6 +84,8 @@ const LoginPage = () => {
                     disabled
                     required
                 />
+                <h1 className="font-bold text-red-900">Loging in now.......</h1>
+                <h1>Please wait while visiting for the first time.First database call may take not more than 30 sec.</h1>
                 <button type="submit" className="w-full bg-green-700 text-white p-2 rounded hover:bg-green-800" disabled>
                     Login
                 </button>
