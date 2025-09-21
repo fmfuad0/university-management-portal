@@ -11,7 +11,10 @@ const LoginPage = () => {
     useEffect(()=>{
         setStudentId("STU005");
         setPassword("pass");
-        handleSubmit();
+        async funtion dd(){
+            await handleSubmit();
+        }
+        dd();
     })
 
     const handleSubmit = async (e) => {
