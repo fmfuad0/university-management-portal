@@ -9,7 +9,8 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
 
     useEffect(()=>{
-        const res = await fetch(`${server}/auth/login`, {
+        async function dd(){
+            const res = await fetch(`${server}/auth/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -17,7 +18,15 @@ const LoginPage = () => {
             credentials :"include",
             body: JSON.stringify({"STU005", "pass"})
         })
-        navigate("/");
+        if(res.status === 200){
+            window.alert("Login successfull");
+            const data = await res.json();
+            setIsLoggedIn(true);
+            setUser(data.student)
+            localStorage.setItem("token", data.token)
+            navigate('/');
+        }
+        dd();
     })
 
     const handleSubmit = async (e) => {
